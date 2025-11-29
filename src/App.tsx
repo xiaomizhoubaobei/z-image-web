@@ -1,6 +1,21 @@
+/*
+ * Copyright 2025 祁筱欣
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Image as ImageIcon, Settings, Globe, Cog } from 'lucide-react'
 import ImageGeneration from './components/ImageGeneration'
@@ -27,7 +42,7 @@ function App() {
             </h1>
           </div>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            阿里巴巴通义实验室开源的高效图像生成模型 • 6B参数 • 8步生成 • 中英双语渲染
+            阿里巴巴通义实验室开源的高效图像生成模型 • 10.26B参数 • 8步生成 • 中英双语渲染
           </p>
           <div className="flex justify-center gap-2 mt-4">
             <Badge variant="secondary">Turbo</Badge>
@@ -47,7 +62,7 @@ function App() {
                         ? "bg-blue-100 text-blue-700" 
                         : "hover:bg-gray-100"
                     }`}
-                    onClick={() => {
+                    onClick={(event) => {
                       // 更新URL hash
                       window.location.hash = 'modelscope';
                       // 隐藏所有内容，显示modelscope内容
@@ -62,8 +77,8 @@ function App() {
                         btn.classList.remove('bg-blue-100', 'text-blue-700');
                         btn.classList.add('hover:bg-gray-100');
                       });
-                      event?.currentTarget.classList.remove('hover:bg-gray-100');
-                      event?.currentTarget.classList.add('bg-blue-100', 'text-blue-700');
+                      event.currentTarget.classList.remove('hover:bg-gray-100');
+                      event.currentTarget.classList.add('bg-blue-100', 'text-blue-700');
                     }}
                   >
                     <Globe className="w-4 h-4" />
@@ -75,7 +90,7 @@ function App() {
                         ? "bg-blue-100 text-blue-700" 
                         : "hover:bg-gray-100"
                     }`}
-                    onClick={() => {
+                    onClick={(event) => {
                       // 更新URL hash
                       window.location.hash = 'edit';
                       // 隐藏所有内容，显示edit内容
@@ -90,8 +105,8 @@ function App() {
                         btn.classList.remove('bg-blue-100', 'text-blue-700');
                         btn.classList.add('hover:bg-gray-100');
                       });
-                      event?.currentTarget.classList.remove('hover:bg-gray-100');
-                      event?.currentTarget.classList.add('bg-blue-100', 'text-blue-700');
+                      event.currentTarget.classList.remove('hover:bg-gray-100');
+                      event.currentTarget.classList.add('bg-blue-100', 'text-blue-700');
                     }}
                   >
                     <Settings className="w-4 h-4" />
@@ -103,7 +118,7 @@ function App() {
                         ? "bg-blue-100 text-blue-700" 
                         : "hover:bg-gray-100"
                     }`}
-                    onClick={() => {
+                    onClick={(event) => {
                       // 更新URL hash
                       window.location.hash = 'gallery';
                       // 隐藏所有内容，显示gallery内容
@@ -118,8 +133,8 @@ function App() {
                         btn.classList.remove('bg-blue-100', 'text-blue-700');
                         btn.classList.add('hover:bg-gray-100');
                       });
-                      event?.currentTarget.classList.remove('hover:bg-gray-100');
-                      event?.currentTarget.classList.add('bg-blue-100', 'text-blue-700');
+                      event.currentTarget.classList.remove('hover:bg-gray-100');
+                      event.currentTarget.classList.add('bg-blue-100', 'text-blue-700');
                     }}
                   >
                     <ImageIcon className="w-4 h-4" />
@@ -131,7 +146,7 @@ function App() {
                         ? "bg-blue-100 text-blue-700" 
                         : "hover:bg-gray-100"
                     }`}
-                    onClick={() => {
+                    onClick={(event) => {
                       // 更新URL hash
                       window.location.hash = 'settings';
                       // 隐藏所有内容，显示settings内容
@@ -146,8 +161,8 @@ function App() {
                         btn.classList.remove('bg-blue-100', 'text-blue-700');
                         btn.classList.add('hover:bg-gray-100');
                       });
-                      event?.currentTarget.classList.remove('hover:bg-gray-100');
-                      event?.currentTarget.classList.add('bg-blue-100', 'text-blue-700');
+                      event.currentTarget.classList.remove('hover:bg-gray-100');
+                      event.currentTarget.classList.add('bg-blue-100', 'text-blue-700');
                     }}
                   >
                     <Cog className="w-4 h-4" />
