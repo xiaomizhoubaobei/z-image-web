@@ -15,7 +15,7 @@ import './App.css'
 function App() {
   const [prompt, setPrompt] = useState('')
   const [negativePrompt, setNegativePrompt] = useState('低分辨率, 水印, 文字裁切')
-  const [model, setModel] = useState<'turbo' | 'base' | 'edit'>('turbo')
+  const model: 'turbo' = 'turbo' // 固定使用Z-Image-Turbo模型
   const [width, setWidth] = useState([1024])
   const [height, setHeight] = useState([1024])
   const [steps, setSteps] = useState([8])
@@ -96,19 +96,13 @@ function App() {
                   <CardDescription>配置您的图像生成参数</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  {/* 模型选择 */}
+                  {/* 模型信息 */}
                   <div className="space-y-2">
-                    <Label htmlFor="model">模型版本</Label>
-                    <Select value={model} onValueChange={setModel}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="turbo">Z-Image-Turbo (8步快速生成)</SelectItem>
-                        <SelectItem value="base">Z-Image-Base (基础开发版)</SelectItem>
-                        <SelectItem value="edit">Z-Image-Edit (图像编辑版)</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Label>当前模型</Label>
+                    <div className="p-3 bg-muted rounded-md">
+                      <div className="font-medium">Z-Image-Turbo</div>
+                      <div className="text-sm text-muted-foreground">8步快速生成版本，适合实时应用</div>
+                    </div>
                   </div>
 
                   {/* 提示词 */}

@@ -1,11 +1,11 @@
-// API 服务配置
+// API 服务配置 - 使用Vite环境变量
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 // Z-Image API 接口类型定义
 export interface GenerateRequest {
   prompt: string;
   negative_prompt?: string;
-  model: 'turbo' | 'base' | 'edit';
+  model: 'turbo';
   width: number;
   height: number;
   num_inference_steps: number;
@@ -99,8 +99,6 @@ class ZImageAPIClient {
    */
   async getModelInfo(): Promise<{
     turbo: { description: string; max_steps: number; recommended_settings: any };
-    base: { description: string; max_steps: number; recommended_settings: any };
-    edit: { description: string; max_steps: number; recommended_settings: any };
   }> {
     try {
       const response = await fetch(`${this.baseURL}/api/models/info`);
@@ -119,23 +117,6 @@ class ZImageAPIClient {
           max_steps: 8,
           recommended_settings: {
             guidance_scale: 0,
-            resolution: [1024, 1024],
-          },
-        },
-        base: {
-          description: 'Z-Image-Base: 基础开发版本，支持50-100步高质量生成',
-          max_steps: 100,
-          recommended_settings: {
-            guidance_scale: 7.5,
-            resolution: [1024, 1024],
-          },
-        },
-        edit: {
-          description: 'Z-Image-Edit: 图像编辑专用版本，支持精确的指令编辑',
-          max_steps: 12,
-          recommended_settings: {
-            guidance_scale: 3.0,
-            strength: 0.75,
             resolution: [1024, 1024],
           },
         },
