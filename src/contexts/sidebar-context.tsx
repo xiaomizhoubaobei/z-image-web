@@ -1,7 +1,7 @@
 import * as React from "react"
 
 export type SidebarContextProps = {
-  state: "open" | "closed"
+  state: "expanded" | "collapsed"
   open: boolean
   setOpen: (open: boolean) => void
   openMobile: boolean

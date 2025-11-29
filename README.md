@@ -55,11 +55,12 @@ yarn preview
 
 ## API 配置
 
-应用需要连接到 Z-Image 后端 API 服务。可以通过环境变量配置：
+应用使用 ModelScope API 服务进行图像生成。可以通过环境变量配置：
 
 ```bash
 # 创建 .env.local 文件
-VITE_API_BASE_URL=http://localhost:8000
+VITE_MODELSCOPE_API_BASE_URL=https://api-inference.modelscope.cn/
+VITE_MODELSCOPE_API_KEY=your_modelscope_api_key
 ```
 
 ## 项目结构
@@ -69,9 +70,8 @@ src/
 ├── components/          # UI 组件
 │   └── ui/             # shadcn/ui 组件
 ├── hooks/              # 自定义 Hooks
-│   └── useZImage.ts   # Z-Image API Hook
 ├── services/           # API 服务
-│   └── api.ts         # Z-Image API 客户端
+│   └── api.ts         # ModelScope API 客户端
 ├── App.tsx            # 主应用组件
 ├── App.css            # 自定义样式
 └── main.tsx           # 应用入口

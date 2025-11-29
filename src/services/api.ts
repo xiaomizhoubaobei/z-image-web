@@ -1,153 +1,156 @@
-// API 服务配置 - 使用Vite环境变量
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+// API 服务配置 - 使用代理路径以避免CORS错误
+const MODELSCOPE_API_BASE_URL = '/api/modelscope';
 
-// Z-Image API 接口类型定义
-export interface GenerateRequest {
+// ModelScope API 相关接口类型定义
+export interface ModelScopeGenerateRequest {
+  model: string;
   prompt: string;
   negative_prompt?: string;
-  model: 'turbo';
-  width: number;
-  height: number;
-  num_inference_steps: number;
-  guidance_scale: number;
+  width?: number;
+  height?: number;
+  num_inference_steps?: number;
+  guidance_scale?: number;
   seed?: number;
 }
 
-export interface GenerateResponse {
-  success: boolean;
-  images: string[];
-  generation_time: number;
-  model_used: string;
-  error?: string;
+export interface ModelScopeTaskResponse {
+  task_id: string;
+  task_status: string;
+  request_id: string;
 }
 
-export interface EditRequest extends GenerateRequest {
-  input_image: string; // base64 encoded image
-  strength?: number;
+export interface ModelScopeResultResponse {
+  task_id: string;
+  task_status: 'SUCCEED' | 'FAILED' | 'PENDING' | 'RUNNING';
+  output_images?: string[];
+  error_msg?: string;
 }
 
-// API 客户端类
-class ZImageAPIClient {
+// ModelScope API 客户端类
+class ModelScopeAPIClient {
   private baseURL: string;
+  private apiKey: string;
 
-  constructor(baseURL: string = API_BASE_URL) {
+  constructor(baseURL: string = MODELSCOPE_API_BASE_URL, apiKey: string = '') {
     this.baseURL = baseURL;
+    this.apiKey = apiKey;
   }
 
   /**
-   * 生成图像
+   * 生成图像 - 异步任务模式
    */
-  async generateImage(request: GenerateRequest): Promise<GenerateResponse> {
+  async generateImageAsync(request: ModelScopeGenerateRequest): Promise<ModelScopeTaskResponse> {
+    if (!this.apiKey) {
+      throw new Error('ModelScope API Key 未配置，请在初始化 ModelScopeAPIClient 时提供 API Key');
+    }
+
     try {
-      const response = await fetch(`${this.baseURL}/api/generate`, {
+      const commonHeaders = {
+        "Authorization": `Bearer ${this.apiKey}`,
+        "Content-Type": "application/json",
+      };
+
+      const response = await fetch(`${this.baseURL}v1/images/generations`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          ...commonHeaders,
+          "X-ModelScope-Async-Mode": "true"
         },
-        body: JSON.stringify(request),
+        body: JSON.stringify({
+          model: request.model,
+          prompt: request.prompt,
+          negative_prompt: request.negative_prompt,
+          width: request.width,
+          height: request.height,
+          num_inference_steps: request.num_inference_steps,
+          guidance_scale: request.guidance_scale,
+          seed: request.seed
+        })
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${await response.text()}`);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('生成图像失败:', error);
-      return {
-        success: false,
-        images: [],
-        generation_time: 0,
-        model_used: request.model,
-        error: error instanceof Error ? error.message : '未知错误',
-      };
+      console.error('生成图像任务提交失败:', error);
+      throw error;
     }
   }
 
   /**
-   * 编辑图像
+   * 查询图像生成结果
    */
-  async editImage(request: EditRequest): Promise<GenerateResponse> {
+  async getTaskResult(taskId: string): Promise<ModelScopeResultResponse> {
+    if (!this.apiKey) {
+      throw new Error('ModelScope API Key 未配置，请在初始化 ModelScopeAPIClient 时提供 API Key');
+    }
+
     try {
-      const response = await fetch(`${this.baseURL}/api/edit`, {
-        method: 'POST',
+      const commonHeaders = {
+        "Authorization": `Bearer ${this.apiKey}`,
+        "Content-Type": "application/json",
+      };
+
+      const response = await fetch(`${this.baseURL}v1/tasks/${taskId}`, {
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          ...commonHeaders,
+          "X-ModelScope-Task-Type": "image_generation",
         },
-        body: JSON.stringify(request),
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${await response.text()}`);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('编辑图像失败:', error);
-      return {
-        success: false,
-        images: [],
-        generation_time: 0,
-        model_used: request.model,
-        error: error instanceof Error ? error.message : '未知错误',
-      };
+      console.error('查询任务结果失败:', error);
+      throw error;
     }
   }
 
   /**
-   * 获取模型信息
+   * 等待图像生成完成并返回结果
    */
-  async getModelInfo(): Promise<{
-    turbo: { description: string; max_steps: number; recommended_settings: { guidance_scale: number; resolution: [number, number] } };
-  }> {
-    try {
-      const response = await fetch(`${this.baseURL}/api/models/info`);
+  async waitForImageGeneration(taskId: string, pollInterval: number = 5000, maxAttempts: number = 24): Promise<ModelScopeResultResponse> {
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      const result = await this.getTaskResult(taskId);
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (result.task_status === 'SUCCEED') {
+        return result;
+      } else if (result.task_status === 'FAILED') {
+        throw new Error(`图像生成失败: ${result.error_msg || '未知错误'}`);
       }
-
-      return await response.json();
-    } catch (error) {
-      console.error('获取模型信息失败:', error);
-      // 返回默认信息
-      return {
-        turbo: {
-          description: 'Z-Image-Turbo: 8步快速生成版本，适合实时应用',
-          max_steps: 8,
-          recommended_settings: {
-            guidance_scale: 0,
-            resolution: [1024, 1024],
-          },
-        },
-      };
+      
+      // 等待指定时间后重试
+      await new Promise(resolve => setTimeout(resolve, pollInterval));
     }
+    
+    throw new Error(`图像生成超时: 任务ID ${taskId}`);
   }
 
   /**
-   * 健康检查
+   * 完整的图像生成流程（提交任务并等待完成）
    */
-  async healthCheck(): Promise<{ status: string; models_available: string[] }> {
+  async generateImage(request: ModelScopeGenerateRequest): Promise<ModelScopeResultResponse> {
     try {
-      const response = await fetch(`${this.baseURL}/api/health`);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      // 提交图像生成任务
+      const taskResponse = await this.generateImageAsync(request);
+      const taskId = taskResponse.task_id;
 
-      return await response.json();
+      // 等待任务完成
+      const result = await this.waitForImageGeneration(taskId);
+      return result;
     } catch (error) {
-      console.error('健康检查失败:', error);
-      return {
-        status: 'unavailable',
-        models_available: [],
-      };
+      console.error('图像生成失败:', error);
+      throw error;
     }
   }
 }
 
-// 导出单例实例
-export const zImageAPI = new ZImageAPIClient();
-
-// 导出类型
-export type { GenerateRequest, GenerateResponse, EditRequest };
+// 导出类和单例实例
+export { ModelScopeAPIClient };
+export const modelScopeAPI = new ModelScopeAPIClient();

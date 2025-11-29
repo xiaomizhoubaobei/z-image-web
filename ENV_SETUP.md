@@ -5,12 +5,19 @@
 ## 必需的环境变量
 
 ```bash
-# API Base URL for Z-Image backend service
-export VITE_API_BASE_URL=http://localhost:8000
-
 # Feature flags
 export VITE_ENABLE_EDIT_FEATURE=true
 export VITE_ENABLE_GALLERY_FEATURE=true
+```
+
+## ModelScope API 相关环境变量
+
+```bash
+# ModelScope API Base URL and Key
+export VITE_MODELSCOPE_API_BASE_URL=https://api-inference.modelscope.cn/
+export VITE_MODELSCOPE_API_KEY=your_modelscope_api_key
+export VITE_MODELSCOPE_POLL_INTERVAL=5000
+export VITE_MODELSCOPE_MAX_ATTEMPTS=24
 ```
 
 ## 可选的环境变量
@@ -20,27 +27,16 @@ export VITE_ENABLE_GALLERY_FEATURE=true
 export VITE_ANALYTICS_ID=your-analytics-id
 ```
 
-## 不同环境的设置
-
-### 开发环境
-```bash
-export VITE_API_BASE_URL=http://localhost:8000
-```
-
-### 生产环境
-```bash
-export VITE_API_BASE_URL=https://your-production-api.com
-```
-
 
 
 ## 运行项目
 
 1. 设置环境变量：
 ```bash
-export VITE_API_BASE_URL=http://localhost:8000
 export VITE_ENABLE_EDIT_FEATURE=true
 export VITE_ENABLE_GALLERY_FEATURE=true
+export VITE_MODELSCOPE_API_BASE_URL=https://api-inference.modelscope.cn/
+export VITE_MODELSCOPE_API_KEY=your_modelscope_api_key
 ```
 
 2. 安装依赖：
@@ -55,10 +51,10 @@ yarn dev
 
 ## 构建项目
 
-构建时确保设置了生产环境的环境变量：
+构建时确保设置了 ModelScope API 密钥：
 
 ```bash
-export VITE_API_BASE_URL=https://your-production-api.com
+export VITE_MODELSCOPE_API_KEY=your_modelscope_api_key
 yarn build
 ```
 
