@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
@@ -15,7 +14,7 @@ import './App.css'
 function App() {
   const [prompt, setPrompt] = useState('')
   const [negativePrompt, setNegativePrompt] = useState('低分辨率, 水印, 文字裁切')
-  const model: 'turbo' = 'turbo' // 固定使用Z-Image-Turbo模型
+  const model = 'turbo' as const // 固定使用Z-Image-Turbo模型
   const [width, setWidth] = useState([1024])
   const [height, setHeight] = useState([1024])
   const [steps, setSteps] = useState([8])

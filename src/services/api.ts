@@ -98,7 +98,7 @@ class ZImageAPIClient {
    * 获取模型信息
    */
   async getModelInfo(): Promise<{
-    turbo: { description: string; max_steps: number; recommended_settings: any };
+    turbo: { description: string; max_steps: number; recommended_settings: { guidance_scale: number; resolution: [number, number] } };
   }> {
     try {
       const response = await fetch(`${this.baseURL}/api/models/info`);
@@ -129,7 +129,7 @@ class ZImageAPIClient {
    */
   async healthCheck(): Promise<{ status: string; models_available: string[] }> {
     try {
-      const response = await fetch(`${this.base_URL}/api/health`);
+      const response = await fetch(`${this.baseURL}/api/health`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
