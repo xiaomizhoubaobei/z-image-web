@@ -1,22 +1,21 @@
-/*
- * Copyright 2025 祁筱欣
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+/**
+ * 合并和处理CSS类名
+ * 
+ * 这个工具函数结合了clsx和tailwind-merge的功能，
+ * 用于条件性地合并和处理CSS类名，同时解决Tailwind CSS类的冲突。
+ * 
+ * @param inputs - 任意数量的CSS类名输入，可以是字符串、对象或数组
+ * @returns 处理后的CSS类名字符串
+ * 
+ * @example
+ * ```ts
+ * cn("text-red-500", { "font-bold": true }, ["bg-blue-200", false && "hidden"])
+ * // 返回: "text-red-500 font-bold bg-blue-200"
+ * ```
+ */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }

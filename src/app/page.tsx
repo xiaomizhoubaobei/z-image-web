@@ -1,29 +1,20 @@
-/*
- * Copyright 2025 祁筱欣
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import Header from '@/components/header';
 import ImageGenerationInterface from '@/components/image-generation-interface';
 
+/**
+ * 主页组件
+ * 
+ * 这是应用程序的主页，包含一个头部组件和图像生成接口组件。
+ * 
+ * @returns 包含Header和ImageGenerationInterface的JSX元素
+ */
 export default function Home() {
-  return (
-      <main className="min-h-screen bg-background text-foreground font-body">
-          <Header/>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-              <ImageGenerationInterface/>
-          </div>
-      </main>
-  );
+    return (
+        <main className="min-h-screen bg-background text-foreground font-body">
+            <Header />
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+                <ImageGenerationInterface />
+            </div>
+        </main>
+    );
 }

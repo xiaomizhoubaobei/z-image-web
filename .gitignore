@@ -43,3 +43,14 @@ next-env.d.ts
 # firebase
 firebase-debug.log
 firestore-debug.log
+/.idea/.gitignore
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/compiler.xml
+/.idea/copilot.data.migration.agent.xml
+/.idea/copilot.data.migration.ask.xml
+/.idea/copilot.data.migration.edit.xml
+/.idea/modules.xml
+/.idea/dictionaries/project.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
+/.idea/workspace.iml

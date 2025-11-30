@@ -1,28 +1,23 @@
-/*
- * Copyright 2025 祁筱欣
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import type {Metadata} from 'next';
 import './globals.css';
-import {Toaster} from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
     title: 'Z-Image AI 图像生成',
     description: '使用强大的人工智能模型生成令人惊叹的图像。',
+    icons: {
+        icon: 'https://cnb.mizhoubaobei.top/z-image-web-logo.jpg',
+    },
 };
 
+/**
+ * 根布局组件
+ * 
+ * 此组件定义了整个应用程序的根HTML结构，包括语言设置、字体预连接和全局样式。
+ * 
+ * @param children - 作为子组件渲染的React节点
+ * @returns 包含完整HTML结构的JSX元素
+ */
 export default function RootLayout({
                                        children,
                                    }: Readonly<{
@@ -44,5 +39,3 @@ export default function RootLayout({
         </html>
     );
 }
-
-    

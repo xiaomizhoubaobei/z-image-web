@@ -1,29 +1,13 @@
-/*
- * Copyright 2025 祁筱欣
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 "use client";
 
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useForm} from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
-import {Download, ImageIcon, Loader2, Sparkles} from "lucide-react";
+import { Download, ImageIcon, Loader2, Sparkles } from "lucide-react";
 
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -48,11 +32,11 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import {Slider} from "@/components/ui/slider";
-import {Textarea} from "@/components/ui/textarea";
-import {useToast} from "@/hooks/use-toast";
-import {Progress} from "@/components/ui/progress";
-import {generateImage, type GenerateImageInput} from "@/ai/flows/generate-image-flow";
+import { Slider } from "@/components/ui/slider";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { Progress } from "@/components/ui/progress";
+import { generateImage, type GenerateImageInput } from "@/ai/flows/generate-image-flow";
 
 
 const formSchema = z.object({
@@ -60,14 +44,21 @@ const formSchema = z.object({
         message: "提示词必须至少包含10个字符。",
     }),
     style: z.string(),
-    resolution: z.string(),
     negative_prompt: z.string().optional(),
     steps: z.array(z.number()).default([30]),
     guidance_scale: z.array(z.number()).default([7.5]),
 });
 
+/**
+ * 图像生成界面组件
+ * 
+ * 该组件提供一个完整的用户界面，用于输入图像生成参数并显示生成结果。
+ * 包含提示词输入、风格选择、参数调整等功能，并处理图像生成的整个流程。
+ * 
+ * @returns 包含图像生成表单和结果展示的JSX元素
+ */
 const ImageGenerationInterface = () => {
-    const {toast} = useToast();
+    const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [progress, setProgress] = useState(0);
@@ -76,14 +67,14 @@ const ImageGenerationInterface = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             prompt: "",
-            style: "photorealistic",
-            resolution: "1024x1024",
+            style: "photo",
             negative_prompt: "",
             steps: [30],
             guidance_scale: [7.5],
         },
     });
 
+    // 处理加载进度条
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
         if (isLoading) {
@@ -106,16 +97,20 @@ const ImageGenerationInterface = () => {
     }, [isLoading]);
 
 
+    /**
+     * 处理表单提交
+     * 
+     * 接收表单数据并调用图像生成API，处理成功或失败的情况。
+     * 
+     * @param values - 表单验证后的值
+     */
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setIsLoading(true);
         setImageUrl(null);
         setProgress(5);
 
         try {
-            const input: GenerateImageInput = {
-                prompt: `${values.prompt}, style: ${values.style}, resolution: ${values.resolution}, negative prompt: ${values.negative_prompt}, steps: ${values.steps[0]}, guidance: ${values.guidance_scale[0]}`,
-            };
-            const result = await generateImage(input);
+            const result = await generateImage(values);
 
             if (result.imageUrl) {
                 setImageUrl(result.imageUrl);
@@ -141,6 +136,11 @@ const ImageGenerationInterface = () => {
         }
     };
 
+    /**
+     * 处理图片下载
+     * 
+     * 创建一个临时链接并触发下载操作以保存生成的图片。
+     */
     const handleDownload = () => {
         if (!imageUrl) return;
         const link = document.createElement("a");
@@ -155,7 +155,7 @@ const ImageGenerationInterface = () => {
     const watchedGuidance = form.watch("guidance_scale");
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             <Card className="shadow-lg rounded-xl">
                 <CardHeader>
                     <CardTitle className="font-headline text-2xl">创建您的图片</CardTitle>
@@ -169,7 +169,7 @@ const ImageGenerationInterface = () => {
                             <FormField
                                 control={form.control}
                                 name="prompt"
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>提示词</FormLabel>
                                         <FormControl>
@@ -180,55 +180,33 @@ const ImageGenerationInterface = () => {
                                                 {...field}
                                             />
                                         </FormControl>
-                                        <FormMessage/>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 gap-4">
                                 <FormField
                                     control={form.control}
                                     name="style"
-                                    render={({field}) => (
+                                    render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>风格</FormLabel>
                                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger>
-                                                        <SelectValue placeholder="选择一个风格"/>
+                                                        <SelectValue placeholder="选择一个风格" />
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    <SelectItem value="photorealistic">写实照片</SelectItem>
+                                                    <SelectItem value="photo">写实照片</SelectItem>
                                                     <SelectItem value="illustration">插画</SelectItem>
                                                     <SelectItem value="anime">动漫</SelectItem>
-                                                    <SelectItem value="fantasy-art">奇幻艺术</SelectItem>
+                                                    <SelectItem value="fantasy">奇幻艺术</SelectItem>
                                                     <SelectItem value="painting">绘画</SelectItem>
                                                 </SelectContent>
                                             </Select>
-                                            <FormMessage/>
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="resolution"
-                                    render={({field}) => (
-                                        <FormItem>
-                                            <FormLabel>分辨率</FormLabel>
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                                <FormControl>
-                                                    <SelectTrigger>
-                                                        <SelectValue placeholder="选择一个分辨率"/>
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent>
-                                                    <SelectItem value="1024x1024">1024x1024 (方形)</SelectItem>
-                                                    <SelectItem value="1792x1024">1792x1024 (横向)</SelectItem>
-                                                    <SelectItem value="1024x1792">1024x1792 (纵向)</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                            <FormMessage/>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />
@@ -237,7 +215,7 @@ const ImageGenerationInterface = () => {
                             <FormField
                                 control={form.control}
                                 name="negative_prompt"
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>反向提示词 (可选)</FormLabel>
                                         <FormControl>
@@ -251,7 +229,7 @@ const ImageGenerationInterface = () => {
                                         <FormDescription>
                                             描述您不希望在图片中出现的内容。
                                         </FormDescription>
-                                        <FormMessage/>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
@@ -259,12 +237,11 @@ const ImageGenerationInterface = () => {
                             <FormField
                                 control={form.control}
                                 name="steps"
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <FormItem>
                                         <div className="flex justify-between items-center">
                                             <FormLabel>步数</FormLabel>
-                                            <span
-                                                className="text-sm font-medium text-muted-foreground">{watchedSteps[0]}</span>
+                                            <span className="text-sm font-medium text-muted-foreground">{watchedSteps[0]}</span>
                                         </div>
                                         <FormControl>
                                             <Slider
@@ -282,12 +259,11 @@ const ImageGenerationInterface = () => {
                             <FormField
                                 control={form.control}
                                 name="guidance_scale"
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <FormItem>
                                         <div className="flex justify-between items-center">
                                             <FormLabel>引导系数</FormLabel>
-                                            <span
-                                                className="text-sm font-medium text-muted-foreground">{watchedGuidance[0]}</span>
+                                            <span className="text-sm font-medium text-muted-foreground">{watchedGuidance[0]}</span>
                                         </div>
                                         <FormControl>
                                             <Slider
@@ -302,12 +278,11 @@ const ImageGenerationInterface = () => {
                                 )}
                             />
 
-                            <Button type="submit" disabled={isLoading}
-                                    className="w-full bg-accent hover:bg-accent/90 text-lg py-6 rounded-lg font-bold">
+                            <Button type="submit" disabled={isLoading} className="w-full bg-accent hover:bg-accent/90 text-lg py-6 rounded-lg font-bold">
                                 {isLoading ? (
-                                    <Loader2 className="mr-2 h-5 w-5 animate-spin"/>
+                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                                 ) : (
-                                    <Sparkles className="mr-2 h-5 w-5"/>
+                                    <Sparkles className="mr-2 h-5 w-5" />
                                 )}
                                 生成图片
                             </Button>
@@ -322,12 +297,11 @@ const ImageGenerationInterface = () => {
                     <CardDescription>您生成的图片将显示在下方。</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow flex items-center justify-center p-2 sm:p-4">
-                    <div
-                        className="aspect-square w-full max-w-full rounded-lg border-2 border-dashed bg-muted/50 flex items-center justify-center overflow-hidden">
+                    <div className="aspect-square w-full max-w-full rounded-lg border-2 border-dashed bg-muted/50 flex items-center justify-center overflow-hidden">
                         {isLoading && progress > 0 ? (
                             <div className="w-full max-w-sm flex flex-col items-center gap-4 px-4">
                                 <p className="text-muted-foreground text-center">正在生成您的图片，请稍候...</p>
-                                <Progress value={progress} className="w-full"/>
+                                <Progress value={progress} className="w-full" />
                             </div>
                         ) : imageUrl ? (
                             <Image
@@ -340,7 +314,7 @@ const ImageGenerationInterface = () => {
                             />
                         ) : (
                             <div className="text-center text-muted-foreground p-8 flex flex-col items-center">
-                                <ImageIcon className="mx-auto h-16 w-16 mb-4 text-muted-foreground/60"/>
+                                <ImageIcon className="mx-auto h-16 w-16 mb-4 text-muted-foreground/60" />
                                 <p className="font-medium">您的杰作正在等待</p>
                                 <p className="text-sm">填写表单以开始</p>
                             </div>
@@ -348,9 +322,8 @@ const ImageGenerationInterface = () => {
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <Button onClick={handleDownload} disabled={!imageUrl || isLoading}
-                            className="w-full text-lg py-6 rounded-lg font-bold">
-                        <Download className="mr-2 h-5 w-5"/>
+                    <Button onClick={handleDownload} disabled={!imageUrl || isLoading} className="w-full text-lg py-6 rounded-lg font-bold">
+                        <Download className="mr-2 h-5 w-5" />
                         下载图片
                     </Button>
                 </CardFooter>

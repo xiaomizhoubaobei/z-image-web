@@ -1,19 +1,3 @@
-/*
- * Copyright 2025 祁筱欣
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 "use client"
 
 // Inspired by react-hot-toast library
@@ -43,6 +27,14 @@ const actionTypes = {
 
 let count = 0
 
+/**
+ * 生成唯一的ID
+ * 
+ * 此函数用于生成唯一的字符串ID，用于标识每个toast通知。
+ * 它会递增一个内部计数器并返回其字符串表示形式。
+ * 
+ * @returns 一个唯一的字符串ID
+ */
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER
   return count.toString()
@@ -149,6 +141,14 @@ const listeners: Array<(state: State) => void> = []
 
 let memoryState: State = { toasts: [] }
 
+/**
+ * 派发状态更新动作
+ * 
+ * 此函数应用给定的动作到内存状态，并通知所有监听器状态已更改。
+ * 它使用reducer函数来计算新状态，然后调用所有注册的监听器。
+ * 
+ * @param action - 要应用的状态变更动作
+ */
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action)
   listeners.forEach((listener) => {
@@ -158,6 +158,15 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">
 
+/**
+ * 创建一个新的toast通知
+ * 
+ * 此函数创建一个新的toast通知，将其添加到状态中并返回
+ * 用于更新或关闭该通知的函数。
+ * 
+ * @param props - toast组件的属性
+ * @returns 包含toast ID、dismiss 和 update 方法的对象
+ */
 function toast({ ...props }: Toast) {
   const id = genId()
 
@@ -187,6 +196,14 @@ function toast({ ...props }: Toast) {
   }
 }
 
+/**
+ * 使用toast状态和方法的React Hook
+ * 
+ * 此Hook提供对toast状态的访问以及创建和管理toast通知的方法。
+ * 它会在组件挂载时订阅状态更新，并在卸载时取消订阅。
+ * 
+ * @returns 包含当前toast状态和操作方法的对象
+ */
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState)
 
