@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+"use client"
+
 import * as React from "react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,

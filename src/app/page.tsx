@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-import { cn } from "@/lib/utils"
+import Header from '@/components/header';
+import ImageGenerationInterface from '@/components/image-generation-interface';
 
-function Skeleton({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+export default function Home() {
   return (
-    <div
-        className={cn("animate-pulse rounded-md bg-muted", className)}
-      {...props}
-    />
-  )
+      <main className="min-h-screen bg-background text-foreground font-body">
+          <Header/>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+              <ImageGenerationInterface/>
+          </div>
+      </main>
+  );
 }
-
-export { Skeleton }

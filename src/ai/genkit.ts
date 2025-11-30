@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-import { cn } from "@/lib/utils"
+import {genkit} from 'genkit';
+import {googleAI} from '@genkit-ai/google-genai';
+import dotenv from 'dotenv';
 
-function Skeleton({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-        className={cn("animate-pulse rounded-md bg-muted", className)}
-      {...props}
-    />
-  )
-}
+dotenv.config();
 
-export { Skeleton }
+export const ai = genkit({
+    plugins: [googleAI()],
+    model: 'googleai/gemini-2.5-flash',
+});

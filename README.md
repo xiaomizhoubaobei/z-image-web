@@ -1,101 +1,70 @@
-# Z-Image Web
+# Z-Image AI 图像生成
 
-基于阿里巴巴通义实验室 Z-Image 模型的 Web 界面，提供高效的图像生成和编辑功能。
+这是一个使用 Next.js 和 Genkit 构建的 AI 图像生成应用。用户可以输入文本提示词，并调整各种参数来创建独特的 AI 生成图像。
 
-## 功能特点
+## ✨ 功能
 
-- 🎨 **文生图**: 支持中英双语提示词
-- ⚡ **高性能**: 基于 Z-Image-Turbo，8步快速生成，亚秒级生成速度
-- 🌐 **响应式设计**: 适配桌面和移动设备
+- **文本生成图片**: 将您的创意文本转化为视觉图像。
+- **参数调整**: 可自定义图片风格、分辨率、步数和引导系数。
+- **图片下载**:轻松下载您创建的图片。
+- **响应式设计**: 在桌面、平板和移动设备上均有良好体验。
+- **实时进度**: 在图片生成过程中显示进度条。
 
-## 模型支持
+## 🚀 技术栈
 
-当前版本仅支持 **Z-Image-Turbo** 模型，这是阿里巴巴通义实验室目前公开发布的唯一版本。
+- [Next.js](https://nextjs.org/) – React 框架
+- [React](https://reactjs.org/) – UI 库
+- [TypeScript](https://www.typescriptlang.org/) – 类型化 JavaScript
+- [Genkit](https://firebase.google.com/docs/genkit) – AI 集成框架
+- [Google Gemini](https://deepmind.google/technologies/gemini/) - AI 模型
+- [ShadCN UI](https://ui.shadcn.com/) – UI 组件库
+- [Tailwind CSS](https://tailwindcss.com/) – CSS 框架
 
-- **Z-Image-Turbo**: 8步快速生成版本，适合实时应用
-  - 推荐设置: guidance_scale = 0
-  - 最大采样步数: 8步
-  - 支持分辨率: 1024x1024
+## 📦 安装与启动
 
-## 技术栈
+请按照以下步骤在本地运行此项目。
 
-- **前端**: React 18 + TypeScript + Vite
-- **UI组件**: shadcn/ui + Radix UI
-- **样式**: Tailwind CSS
-- **图标**: Lucide React
-- **状态管理**: React Hooks
-
-## 快速开始
-
-### 安装依赖
+### 1. 克隆仓库
 
 ```bash
-yarn install
+git clone <repository-url>
+cd <repository-directory>
 ```
 
-### 启动开发服务器
+### 2. 安装依赖
 
 ```bash
-yarn dev
+npm install
 ```
 
-应用将在 http://localhost:5173 启动。
+### 3. 设置环境变量
 
-### 构建生产版本
+您需要一个 Google AI API 密钥才能使用 Gemini 模型。
+
+1. 访问 [Google AI Studio](https://aistudio.google.com/app/apikey) 获取您的 API 密钥。
+2. 在项目根目录下创建一个名为 `.env.local` 的文件。
+3. 将您的 API 密钥添加到文件中：
+
+   ```env
+   GEMINI_API_KEY="在这里粘贴您的API密钥"
+   ```
+
+### 4. 运行开发服务器
+
+现在，您可以启动 Next.js 开发服务器：
 
 ```bash
-yanr build
+npm run dev
 ```
 
-### 预览生产版本
+在浏览器中打开 [http://localhost:9002](http://localhost:9002) 即可看到正在运行的应用。
 
-```bash
-yarn preview
-```
+## 🎨 使用方法
 
-## API 配置
-
-应用使用 ModelScope API 服务进行图像生成。可以通过环境变量配置：
-
-```bash
-# 创建 .env.local 文件
-VITE_MODELSCOPE_API_BASE_URL=https://api-inference.modelscope.cn/
-VITE_MODELSCOPE_API_KEY=your_modelscope_api_key
-```
-
-## 项目结构
-
-```
-src/
-├── components/          # UI 组件
-│   └── ui/             # shadcn/ui 组件
-├── hooks/              # 自定义 Hooks
-├── services/           # API 服务
-│   └── api.ts         # ModelScope API 客户端
-├── App.tsx            # 主应用组件
-├── App.css            # 自定义样式
-└── main.tsx           # 应用入口
-```
-
-## 使用说明
-
-1. **输入提示词**: 描述您想要生成的图像内容
-2. **调整参数**: 设置图像尺寸、采样步数等参数
-   - 注意：Z-Image-Turbo 推荐使用 guidance_scale = 0
-   - 采样步数建议设置为 4-8 步
-3. **开始生成**: 点击生成按钮等待结果
-4. **下载保存**: 生成的图像可直接下载保存
-
-## 注意事项
-
-- 建议使用 Chrome 或 Firefox 浏览器获得最佳体验
-
-## 相关链接
-
-- [Z-Image GitHub](https://github.com/Tongyi-MAI/Z-Image)
-- [Z-Image 官网](https://tongyi-mai.github.io/Z-Image-homepage/)
-- [ModelScope](https://www.modelscope.cn/models/Tongyi-MAI/Z-Image-Turbo)
-
-## 许可证
-
-本项目采用 MIT 许可证。
+1. 在“提示词”文本框中输入您想要生成的图片描述。
+2. 根据需要选择“风格”和“分辨率”。
+3. （可选）填写“反向提示词”来排除不希望出现的元素。
+4. 调整“步数”和“引导系数”滑块以控制生成质量和与提示词的符合度。
+5. 点击“生成图片”按钮。
+6. 等待进度条完成，您生成的图片将显示在右侧的输出框中。
+7. 点击“下载图片”按钮保存您的作品。

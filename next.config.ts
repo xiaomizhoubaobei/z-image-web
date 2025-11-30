@@ -14,18 +14,26 @@
  * limitations under the License.
  */
 
-import { cn } from "@/lib/utils"
+import type {NextConfig} from 'next';
 
-function Skeleton({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-        className={cn("animate-pulse rounded-md bg-muted", className)}
-      {...props}
-    />
-  )
-}
+const nextConfig: NextConfig = {
+    /* config options here */
+    typescript: {
+        ignoreBuildErrors: true,
+    },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',
+                port: '',
+                pathname: '/**',
+            }
+        ],
+    },
+};
 
-export { Skeleton }
+export default nextConfig;
