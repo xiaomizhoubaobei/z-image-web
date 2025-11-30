@@ -3,8 +3,11 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * 定义警告框的样式变体。
+ */
 const alertVariants = cva(
-    "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
   {
     variants: {
       variant: {
@@ -19,6 +22,9 @@ const alertVariants = cva(
   }
 )
 
+/**
+ * 用于显示重要消息的警告框组件。
+ */
 const Alert = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
@@ -32,6 +38,9 @@ const Alert = React.forwardRef<
 ))
 Alert.displayName = "Alert"
 
+/**
+ * 警告框的标题。
+ */
 const AlertTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
@@ -44,6 +53,9 @@ const AlertTitle = React.forwardRef<
 ))
 AlertTitle.displayName = "AlertTitle"
 
+/**
+ * 警告框的描述文本。
+ */
 const AlertDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>

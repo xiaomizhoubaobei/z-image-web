@@ -10,7 +10,12 @@ import {
   ToastViewport,
 } from "@/components/ui/toast"
 
-export function Toaster() {
+/**
+ * Toaster 组件负责渲染所有的 toast 通知。
+ * 它使用 `useToast` hook 来获取 toast 列表，并在 `ToastProvider` 中渲染它们。
+ * @returns {JSX.Element} 渲染后的包含所有活动 toast 的 toaster 容器。
+ */
+export function Toaster(): JSX.Element {
   const { toasts } = useToast()
 
   return (

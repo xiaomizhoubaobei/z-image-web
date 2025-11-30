@@ -5,6 +5,9 @@ import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * 用一个自定义样式的滚动条来增强一个区域，同时隐藏浏览器默认的滚动条。
+ */
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
@@ -23,6 +26,9 @@ const ScrollArea = React.forwardRef<
 ))
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
 
+/**
+ * ScrollArea 的滚动条组件。
+ */
 const ScrollBar = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>

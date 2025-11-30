@@ -6,7 +6,7 @@ import { Slot } from "@radix-ui/react-slot"
 import {
   Controller,
   FormProvider,
-    useFormContext,
+  useFormContext,
   type ControllerProps,
   type FieldPath,
   type FieldValues,
@@ -15,19 +15,28 @@ import {
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 
+/**
+ * `react-hook-form` 的提供者组件，用于将表单上下文传递给子组件。
+ */
 const Form = FormProvider
 
+/**
+ * `FormFieldContext` 的值类型定义。
+ */
 type FormFieldContextValue<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = {
-    name: TName
+  name: TName
 }
 
 const FormFieldContext = React.createContext<FormFieldContextValue>(
-    {} as FormFieldContextValue
+  {} as FormFieldContextValue
 )
 
+/**
+ * 一个包装器，用于将 `react-hook-form` 的 `Controller` 与我们的 UI 组件连接起来。
+ */
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -41,37 +50,46 @@ const FormField = <
   )
 }
 
+/**
+ * 用于访问表单字段状态的 Hook。
+ */
 const useFormField = () => {
-    const fieldContext = React.useContext(FormFieldContext)
-    const itemContext = React.useContext(FormItemContext)
-    const {getFieldState, formState} = useFormContext()
+  const fieldContext = React.useContext(FormFieldContext)
+  const itemContext = React.useContext(FormItemContext)
+  const { getFieldState, formState } = useFormContext()
 
-    const fieldState = getFieldState(fieldContext.name, formState)
+  const fieldState = getFieldState(fieldContext.name, formState)
 
-    if (!fieldContext) {
-        throw new Error("useFormField should be used within <FormField>")
-    }
+  if (!fieldContext) {
+    throw new Error("useFormField should be used within <FormField>")
+  }
 
-    const {id} = itemContext
+  const { id } = itemContext
 
-    return {
-        id,
-        name: fieldContext.name,
-        formItemId: `${id}-form-item`,
-        formDescriptionId: `${id}-form-item-description`,
-        formMessageId: `${id}-form-item-message`,
-        ...fieldState,
-    }
+  return {
+    id,
+    name: fieldContext.name,
+    formItemId: `${id}-form-item`,
+    formDescriptionId: `${id}-form-item-description`,
+    formMessageId: `${id}-form-item-message`,
+    ...fieldState,
+  }
 }
 
+/**
+ * `FormItemContext` 的值类型定义。
+ */
 type FormItemContextValue = {
-    id: string
+  id: string
 }
 
 const FormItemContext = React.createContext<FormItemContextValue>(
-    {} as FormItemContextValue
+  {} as FormItemContextValue
 )
 
+/**
+ * 用于包裹标签、输入控件、错误消息和描述文本的容器组件。
+ */
 const FormItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -86,6 +104,9 @@ const FormItem = React.forwardRef<
 })
 FormItem.displayName = "FormItem"
 
+/**
+ * 表单字段的标签。
+ */
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
@@ -103,6 +124,9 @@ const FormLabel = React.forwardRef<
 })
 FormLabel.displayName = "FormLabel"
 
+/**
+ * 用于包裹输入控件的容器，处理 aria 属性。
+ */
 const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
@@ -125,6 +149,9 @@ const FormControl = React.forwardRef<
 })
 FormControl.displayName = "FormControl"
 
+/**
+ * 表单字段的描述文本。
+ */
 const FormDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -142,6 +169,9 @@ const FormDescription = React.forwardRef<
 })
 FormDescription.displayName = "FormDescription"
 
+/**
+ * 用于显示表单字段验证错误消息的组件。
+ */
 const FormMessage = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -167,7 +197,7 @@ const FormMessage = React.forwardRef<
 FormMessage.displayName = "FormMessage"
 
 export {
-    useFormField,
+  useFormField,
   Form,
   FormItem,
   FormLabel,

@@ -6,8 +6,14 @@ import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * 一个可折叠的内容区域集合。
+ */
 const Accordion = AccordionPrimitive.Root
 
+/**
+ * Accordion 组件中的一个可折叠项目。
+ */
 const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
@@ -20,6 +26,9 @@ const AccordionItem = React.forwardRef<
 ))
 AccordionItem.displayName = "AccordionItem"
 
+/**
+ * 一个用于切换 AccordionItem 展开和折叠状态的按钮。
+ */
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
@@ -28,18 +37,21 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-          "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+        "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
         className
       )}
       {...props}
     >
       {children}
-        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200"/>
+      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ))
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
+/**
+ * AccordionItem 中可折叠的内容。
+ */
 const AccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>

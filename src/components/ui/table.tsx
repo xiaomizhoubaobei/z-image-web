@@ -2,6 +2,9 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * 用于显示表格数据的容器。
+ */
 const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
@@ -16,6 +19,9 @@ const Table = React.forwardRef<
 ))
 Table.displayName = "Table"
 
+/**
+ * 表格的表头部分。
+ */
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
@@ -24,6 +30,9 @@ const TableHeader = React.forwardRef<
 ))
 TableHeader.displayName = "TableHeader"
 
+/**
+ * 表格的主体部分。
+ */
 const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
@@ -36,6 +45,9 @@ const TableBody = React.forwardRef<
 ))
 TableBody.displayName = "TableBody"
 
+/**
+ * 表格的表尾部分。
+ */
 const TableFooter = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
@@ -51,6 +63,9 @@ const TableFooter = React.forwardRef<
 ))
 TableFooter.displayName = "TableFooter"
 
+/**
+ * 表格中的行。
+ */
 const TableRow = React.forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement>
@@ -66,6 +81,9 @@ const TableRow = React.forwardRef<
 ))
 TableRow.displayName = "TableRow"
 
+/**
+ * 表格中的表头单元格。
+ */
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
   React.ThHTMLAttributes<HTMLTableCellElement>
@@ -73,7 +91,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-        "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
       className
     )}
     {...props}
@@ -81,6 +99,9 @@ const TableHead = React.forwardRef<
 ))
 TableHead.displayName = "TableHead"
 
+/**
+ * 表格中的单元格。
+ */
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
   React.TdHTMLAttributes<HTMLTableCellElement>
@@ -93,6 +114,9 @@ const TableCell = React.forwardRef<
 ))
 TableCell.displayName = "TableCell"
 
+/**
+ * 表格的标题。
+ */
 const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   React.HTMLAttributes<HTMLTableCaptionElement>

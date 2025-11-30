@@ -1,17 +1,21 @@
-import {Sparkles} from 'lucide-react';
-import type {FC} from 'react';
+import type { FC } from 'react';
 
+/**
+ * 应用程序的页眉组件。
+ * 显示主标题和副标题。
+ * @returns {JSX.Element} 渲染后的页眉部分。
+ */
 const Header: FC = () => {
-    return (
-        <header className="flex items-center justify-center py-8 md:py-12 lg:py-16">
-            <div className="flex items-center gap-3 text-center">
-                <Sparkles className="h-8 w-8 sm:h-10 sm:w-10 text-primary"/>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-headline font-bold tracking-tight text-foreground">
-                    Z-Image AI 图像生成
-                </h1>
-            </div>
-        </header>
-    );
+  return (
+    <header className="py-8 md:py-12 lg:py-16 text-center">
+      <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight">
+        Z-Image AI
+      </h1>
+      <p className="mt-2 text-muted-foreground">
+        将您的创意文本转化为视觉图像
+      </p>
+    </header>
+  );
 };
 
 export default Header;

@@ -6,14 +6,29 @@ import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * 一个在页面内容之上显示内容的模态窗口。
+ */
 const Dialog = DialogPrimitive.Root
 
+/**
+ * 用于打开对话框的按钮。
+ */
 const DialogTrigger = DialogPrimitive.Trigger
 
+/**
+ * 一个将子组件渲染到不同 DOM 树中的传送门。
+ */
 const DialogPortal = DialogPrimitive.Portal
 
+/**
+ * 用于关闭对话框的按钮。
+ */
 const DialogClose = DialogPrimitive.Close
 
+/**
+ * 一个半透明的覆盖层，显示在对话框后面。
+ */
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
@@ -21,7 +36,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-        "fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -29,6 +44,9 @@ const DialogOverlay = React.forwardRef<
 ))
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
+/**
+ * 对话框的主要内容区域。
+ */
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
@@ -53,6 +71,10 @@ const DialogContent = React.forwardRef<
 ))
 DialogContent.displayName = DialogPrimitive.Content.displayName
 
+/**
+ * 对话框的页眉区域。
+ * @param {React.HTMLAttributes<HTMLDivElement>} props - 组件的 props。
+ */
 const DialogHeader = ({
   className,
   ...props
@@ -67,6 +89,10 @@ const DialogHeader = ({
 )
 DialogHeader.displayName = "DialogHeader"
 
+/**
+ * 对话框的页脚区域。
+ * @param {React.HTMLAttributes<HTMLDivElement>} props - 组件的 props。
+ */
 const DialogFooter = ({
   className,
   ...props
@@ -81,6 +107,9 @@ const DialogFooter = ({
 )
 DialogFooter.displayName = "DialogFooter"
 
+/**
+ * 对话框的标题。
+ */
 const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
@@ -96,6 +125,9 @@ const DialogTitle = React.forwardRef<
 ))
 DialogTitle.displayName = DialogPrimitive.Title.displayName
 
+/**
+ * 对话框的描述文本。
+ */
 const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
@@ -113,7 +145,7 @@ export {
   DialogPortal,
   DialogOverlay,
   DialogClose,
-    DialogTrigger,
+  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogFooter,

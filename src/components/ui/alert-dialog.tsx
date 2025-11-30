@@ -6,19 +6,31 @@ import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
+/**
+ * 一个模态对话框，用于中断用户并要求他们确认一个操作。
+ */
 const AlertDialog = AlertDialogPrimitive.Root
 
+/**
+ * 一个包裹 AlertDialog 触发器的组件。
+ */
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger
 
+/**
+ * 一个将子组件渲染到不同 DOM 树中的传送门。
+ */
 const AlertDialogPortal = AlertDialogPrimitive.Portal
 
+/**
+ * 一个半透明的覆盖层，显示在对话框后面。
+ */
 const AlertDialogOverlay = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Overlay
     className={cn(
-        "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -27,6 +39,9 @@ const AlertDialogOverlay = React.forwardRef<
 ))
 AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName
 
+/**
+ * 对话框的主要内容区域。
+ */
 const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
@@ -45,6 +60,10 @@ const AlertDialogContent = React.forwardRef<
 ))
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName
 
+/**
+ * 对话框的页眉区域，通常包含标题和描述。
+ * @param {React.HTMLAttributes<HTMLDivElement>} props - 组件的 props。
+ */
 const AlertDialogHeader = ({
   className,
   ...props
@@ -59,6 +78,10 @@ const AlertDialogHeader = ({
 )
 AlertDialogHeader.displayName = "AlertDialogHeader"
 
+/**
+ * 对话框的页脚区域，通常包含操作按钮。
+ * @param {React.HTMLAttributes<HTMLDivElement>} props - 组件的 props。
+ */
 const AlertDialogFooter = ({
   className,
   ...props
@@ -73,6 +96,9 @@ const AlertDialogFooter = ({
 )
 AlertDialogFooter.displayName = "AlertDialogFooter"
 
+/**
+ * 对话框的标题。
+ */
 const AlertDialogTitle = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
@@ -85,6 +111,9 @@ const AlertDialogTitle = React.forwardRef<
 ))
 AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName
 
+/**
+ * 对话框的描述文本。
+ */
 const AlertDialogDescription = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
@@ -98,6 +127,9 @@ const AlertDialogDescription = React.forwardRef<
 AlertDialogDescription.displayName =
   AlertDialogPrimitive.Description.displayName
 
+/**
+ * 用于确认对话框操作的按钮。
+ */
 const AlertDialogAction = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Action>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
@@ -110,6 +142,9 @@ const AlertDialogAction = React.forwardRef<
 ))
 AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName
 
+/**
+ * 用于取消对话框操作的按钮。
+ */
 const AlertDialogCancel = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>

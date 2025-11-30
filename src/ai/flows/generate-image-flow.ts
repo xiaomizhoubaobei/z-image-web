@@ -1,73 +1,67 @@
 'use server';
 /**
- * @fileoverview A flow for generating images using the ModelScope Tongyi-MAI model.
+ * @fileoverview 使用 ModelScope Tongyi-MAI 模型生成图像的流程。
+ * 该文件定义了请求图像生成任务并轮询其结果的全过程。
  *
- * - generateImage - A function that handles the image generation process.
- * - GenerateImageInput - The input type for the generateImage function.
- * - GenerateImageOutput - The return type for the generateImage function.
+ * - generateImage - 一个导出的函数，用于处理图像生成过程。
+ * - GenerateImageInput - `generateImage` 函数的输入类型。
+ * - GenerateImageOutput - `generateImage` 函数的返回类型。
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import fetch from 'node-fetch';
 
+/**
+ * 定义图像生成流程的输入 Zod schema。
+ * 这些是从客户端发送到 Genkit 流程的参数。
+ */
 const GenerateImageInputSchema = z.object({
-  prompt: z.string().describe('The text prompt to generate an image from.'),
-  style: z.string().describe('The style of the image to generate.'),
-  negative_prompt: z.string().optional().describe('Elements to exclude from the image.'),
-  steps: z.array(z.number()).describe('Number of generation steps.'),
-  guidance_scale: z.array(z.number()).describe('Guidance scale for the generation.'),
+  prompt: z.string().describe('用于生成图像的文本提示。'),
+  style: z.string().describe('要生成的图像风格。'),
+  negative_prompt: z.string().optional().describe('要从图像中排除的元素。'),
+  steps: z.array(z.number()).describe('生成步数。'),
+  guidance_scale: z.array(z.number()).describe('生成的引导系数。'),
 });
+/**
+ * 图像生成流程的输入类型。
+ * @see GenerateImageInputSchema
+ */
 export type GenerateImageInput = z.infer<typeof GenerateImageInputSchema>;
 
+/**
+ * 定义图像生成流程的输出 Zod schema。
+ * 这是成功完成后返回给客户端的数据结构。
+ */
 const GenerateImageOutputSchema = z.object({
-  imageUrl: z.string().describe('The URL of the generated image.'),
+  imageUrl: z.string().describe('生成图像的 URL。'),
 });
+/**
+ * 图像生成流程的输出类型。
+ * @see GenerateImageOutputSchema
+ */
 export type GenerateImageOutput = z.infer<typeof GenerateImageOutputSchema>;
 
 /**
- * 生成图像的主函数
- * 
- * @param input - 包含图像生成参数的输入对象
- * @returns 生成的图像URL
- * 
- * @example
- * ```ts
- * const result = await generateImage({
- *   prompt: "A beautiful sunset",
- *   style: "photo",
- *   steps: [30],
- *   guidance_scale: [7.5]
- * });
- * console.log(result.imageUrl);
- * ```
+ * 触发图像生成流程的公共函数。这是客户端的入口点。
+ * @param {GenerateImageInput} input - 来自客户端的图像生成输入参数。
+ * @returns {Promise<GenerateImageOutput>} 一个解析为生成图像 URL 的 Promise。
  */
 export async function generateImage(input: GenerateImageInput): Promise<GenerateImageOutput> {
   return generateImageFlow(input);
 }
 
-// Helper function to delay execution
+/**
+ * 用于将执行延迟指定时间的辅助函数。
+ * 用于轮询任务状态。
+ * @param {number} ms - 要休眠的毫秒数。
+ * @returns {Promise<void>} 一个在指定延迟后解析的 Promise。
+ */
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
- * 定义图像生成流程
- * 
- * 此函数使用 ModelScope API 异步生成图像。它首先启动一个图像生成任务，
- * 然后轮询服务器直到任务完成，最后返回生成的图像 URL。
- * 
- * @param input - 包含图像生成参数的输入对象
- * @returns 生成的图像URL
- * 
- * @example
- * ```ts
- * const result = await generateImageFlow({
- *   prompt: "A beautiful sunset",
- *   style: "photo",
- *   steps: [30],
- *   guidance_scale: [7.5]
- * });
- * console.log(result.imageUrl);
- * ```
+ * 生成图像的主要 Genkit 流程。它会通过外部 API 启动一个任务，
+ * 然后轮询结果。
  */
 const generateImageFlow = ai.defineFlow(
   {
@@ -78,7 +72,7 @@ const generateImageFlow = ai.defineFlow(
   async (input) => {
     const apiKey = process.env.MODELSCOPE_API_KEY;
     if (!apiKey) {
-      throw new Error('MODELSCOPE_API_KEY environment variable not set.');
+      throw new Error('MODELSCOPE_API_KEY 环境变量未设置。');
     }
     const base_url = 'https://api-inference.modelscope.cn/';
 
@@ -87,7 +81,7 @@ const generateImageFlow = ai.defineFlow(
       "Content-Type": "application/json",
     };
 
-    // 1. Initiate the task
+    // 1. 启动任务
     const postResponse = await fetch(
       `${base_url}v1/images/generations`,
       {
@@ -100,7 +94,6 @@ const generateImageFlow = ai.defineFlow(
           model: "Tongyi-MAI/Z-Image-Turbo",
           prompt: input.prompt,
           n: 1,
-          size: "1024*1024",
           style: input.style,
           negative_prompt: input.negative_prompt,
           steps: input.steps[0],
@@ -111,19 +104,19 @@ const generateImageFlow = ai.defineFlow(
 
     if (!postResponse.ok) {
         const errorBody = await postResponse.text();
-        throw new Error(`Failed to initiate image generation task: ${postResponse.statusText} - ${errorBody}`);
+        throw new Error(`启动图像生成任务失败: ${postResponse.statusText} - ${errorBody}`);
     }
 
     const postResult = await postResponse.json() as any;
     const taskId = postResult?.task_id;
 
     if (!taskId) {
-        throw new Error('Failed to get task_id from initiation response.');
+        throw new Error('从启动响应中获取 task_id 失败。');
     }
 
-    // 2. Poll for the result
+    // 2. 轮询结果
     while (true) {
-      await sleep(3000); // Wait for 3 seconds before polling
+      await sleep(3000); // 轮询前等待3秒
 
       const getResponse = await fetch(
         `${base_url}v1/tasks/${taskId}`,
@@ -137,9 +130,9 @@ const generateImageFlow = ai.defineFlow(
 
       if (!getResponse.ok) {
         const errorBody = await getResponse.text();
-        // Don't throw immediately, maybe the task is just not ready
-        console.warn(`Polling failed: ${getResponse.statusText} - ${errorBody}`);
-        continue; // Continue polling
+        // 不要立即抛出异常，可能任务只是还没准备好
+        console.warn(`轮询失败: ${getResponse.statusText} - ${errorBody}`);
+        continue; // 继续轮询
       }
       
       const data = await getResponse.json() as any;
@@ -151,12 +144,12 @@ const generateImageFlow = ai.defineFlow(
                 imageUrl: imageUrl,
             };
         } else {
-            throw new Error('Task succeeded but no valid image URL was returned.');
+            throw new Error('任务成功，但未返回有效的图像 URL。');
         }
       } else if (data.task_status === 'FAILED') {
-        throw new Error('Image generation task failed.');
+        throw new Error('图像生成任务失败。');
       }
-      // If task_status is 'RUNNING' or something else, the loop will continue.
+      // 如果 task_status 是 'RUNNING' 或其他状态，循环将继续。
     }
   }
 );
