@@ -7,10 +7,10 @@
  * - GenerateImageInput - `generateImage` 函数的输入类型。
  * - GenerateImageOutput - `generateImage` 函数的返回类型。
  */
-
-import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import fetch from 'node-fetch';
+
+import { ai } from '@/ai/genkit';
 
 /**
  * 定义图像生成流程的输入 Zod schema。
@@ -57,7 +57,7 @@ export async function generateImage(input: GenerateImageInput): Promise<Generate
  * @param {number} ms - 要休眠的毫秒数。
  * @returns {Promise<void>} 一个在指定延迟后解析的 Promise。
  */
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
  * 生成图像的主要 Genkit 流程。它会通过外部 API 启动一个任务，
@@ -74,7 +74,7 @@ const generateImageFlow = ai.defineFlow(
     if (!apiKey) {
       throw new Error('MODELSCOPE_API_KEY 环境变量未设置。');
     }
-    const base_url = 'https://api-inference.modelscope.cn/';
+    const base_url = 'https://api-inference.modelscope.cn';
 
     const commonHeaders = {
       "Authorization": `Bearer ${apiKey}`,
@@ -82,8 +82,9 @@ const generateImageFlow = ai.defineFlow(
     };
 
     // 1. 启动任务
+    const postUrl = new URL('v1/images/generations', base_url).toString();
     const postResponse = await fetch(
-      `${base_url}v1/images/generations`,
+      postUrl,
       {
         method: 'POST',
         headers: {
@@ -105,25 +106,26 @@ const generateImageFlow = ai.defineFlow(
     const postResult = await postResponse.json() as any;
 
     if (!postResponse.ok) {
-        const errorMessage = postResult?.message || `启动图像生成任务失败: ${postResponse.statusText}`;
-        throw new Error(errorMessage);
+      const errorMessage = postResult?.message || `启动图像生成任务失败: ${postResponse.statusText}`;
+      throw new Error(errorMessage);
     }
 
     const taskId = postResult?.output?.task_id || postResult?.task_id;
 
     if (!taskId) {
-        throw new Error(`从启动响应中获取 task_id 失败: ${JSON.stringify(postResult)}`);
+      throw new Error(`从启动响应中获取 task_id 失败: ${JSON.stringify(postResult)}`);
     }
 
     // 2. 轮询结果
     while (true) {
       await sleep(3000); // 轮询前等待3秒
 
+      const getUrl = new URL(`v1/tasks/${taskId}`, base_url).toString();
       const getResponse = await fetch(
-        `${base_url}v1/tasks/${taskId}`,
+        getUrl,
         {
           headers: {
-            ...commonHeaders, 
+            ...commonHeaders,
             "X-ModelScope-Task-Type": "image_generation"
           },
         }
@@ -135,15 +137,15 @@ const generateImageFlow = ai.defineFlow(
         const errorMessage = data?.message || `轮询任务状态失败: ${getResponse.statusText}`;
         throw new Error(errorMessage);
       }
-      
+
       if (data.task_status === 'SUCCEED') {
         const imageUrl = data.output?.images?.[0]?.url || data.output_images?.[0];
         if (imageUrl) {
-            return {
-                imageUrl: imageUrl,
-            };
+          return {
+            imageUrl: imageUrl,
+          };
         } else {
-            throw new Error('任务成功，但未返回有效的图像 URL。');
+          throw new Error('任务成功，但未返回有效的图像 URL。');
         }
       } else if (data.task_status === 'FAILED') {
         throw new Error(`图像生成任务失败: ${data.message || '未知错误'}`);

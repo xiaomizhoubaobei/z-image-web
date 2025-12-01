@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 /**
  * 一个用于有条件地合并 class 名称的工具函数。
@@ -10,7 +10,5 @@ import { twMerge } from "tailwind-merge"
  * @returns {string} 合并和优化后的 class 名称字符串。
  */
 export function cn(...inputs: ClassValue[]): string {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
-
-    

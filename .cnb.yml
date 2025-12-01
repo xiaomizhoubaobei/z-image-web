@@ -1,12 +1,14 @@
 $:
     vscode:
-        - runner:
-              cpus: 16
+        - docker:
+          image: docker.cnb.cool/xmzzuzhi/cnb-docker/ipynb:cuda12.8.1-pytorch2.4.1-prod
+          imports:
+            - https://cnb.cool/XMZZUZHI/key/-/blob/main/cnb.yml
+          runner:
+            cpus: 32
           services:
-              - vscode
-              - docker
-          docker:
-              image: docker.cnb.cool/xmzzuzhi/cnb-docker/node:0.0.1
+            - vscode
+            - docker
           stages:
               - name: 授予install_gpg_keys.sh权限
                 script:

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {cn} from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 /**
  * 一个可在整个应用程序中使用的自定义 Textarea 组件。
@@ -10,7 +10,7 @@ import {cn} from '@/lib/utils';
  * @returns {JSX.Element} 渲染后的 textarea 组件。
  */
 const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'>>(
-  ({className, ...props}, ref) => {
+  ({ className, ...props }, ref) => {
     return (
       <textarea
         className={cn(
@@ -25,6 +25,4 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
 );
 Textarea.displayName = 'Textarea';
 
-export {Textarea};
-
-    
+export { Textarea };

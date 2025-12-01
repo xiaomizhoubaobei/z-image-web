@@ -2,10 +2,9 @@
  * @fileoverview 初始化并配置 Genkit AI 实例。
  * 该文件使用必要的插件和模型配置来设置核心 Genkit 对象。
  */
-
-import {genkit} from 'genkit';
-import {googleAI} from '@genkit-ai/google-genai';
+import { googleAI } from '@genkit-ai/google-genai';
 import dotenv from 'dotenv';
+import { genkit } from 'genkit';
 
 // 从 .env 文件加载环境变量到 process.env
 dotenv.config();
@@ -22,5 +21,3 @@ export const ai = genkit({
   plugins: [googleAI()],
   model: 'googleai/gemini-2.5-flash',
 });
-
-    

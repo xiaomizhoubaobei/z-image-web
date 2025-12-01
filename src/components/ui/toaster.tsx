@@ -1,6 +1,5 @@
-"use client"
+'use client';
 
-import { useToast } from "@/hooks/use-toast"
 import {
   Toast,
   ToastClose,
@@ -8,7 +7,8 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from "@/components/ui/toast"
+} from '@/components/ui/toast';
+import { useToast } from '@/hooks/use-toast';
 
 /**
  * Toaster 组件负责渲染所有的 toast 通知。
@@ -16,7 +16,7 @@ import {
  * @returns {JSX.Element} 渲染后的包含所有活动 toast 的 toaster 容器。
  */
 export function Toaster(): JSX.Element {
-  const { toasts } = useToast()
+  const { toasts } = useToast();
 
   return (
     <ToastProvider>
@@ -25,18 +25,14 @@ export function Toaster(): JSX.Element {
           <Toast key={id} {...props}>
             <div className="grid gap-1">
               {title && <ToastTitle>{title}</ToastTitle>}
-              {description && (
-                <ToastDescription>{description}</ToastDescription>
-              )}
+              {description && <ToastDescription>{description}</ToastDescription>}
             </div>
             {action}
             <ToastClose />
           </Toast>
-        )
+        );
       })}
       <ToastViewport />
     </ToastProvider>
-  )
+  );
 }
-
-    
