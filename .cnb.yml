@@ -1,7 +1,7 @@
 $:
     vscode:
         - docker:
-          image: docker.cnb.cool/xmzzuzhi/cnb-docker/ipynb:cuda12.8.1-pytorch2.4.1-prod
+            image: docker.cnb.cool/xmzzuzhi/cnb-docker/node:0.0.1
           imports:
             - https://cnb.cool/XMZZUZHI/key/-/blob/main/cnb.yml
           runner:
