@@ -1,18 +1,18 @@
-# **App Name**: Z-Image Frontend
+# **应用名称**: Z-Image 前端
 
-## Core Features:
+## 核心功能:
 
-- Image Generation Interface: Provides a UI for users to input parameters and trigger image generation using the Z-Image model based on the model code from the provided GitHub link.
-- Parameter Input: Allows users to specify parameters such as resolution, style, and other relevant settings for image generation.
-- Image Preview: Displays a preview of the generated image based on user inputs.
-- Download Functionality: Enables users to download the generated image in various formats.
+- 图像生成界面: 提供用户界面，让用户输入参数并使用基于提供的 GitHub 链接中的模型代码的 Z-Image 模型触发图像生成。
+- 参数输入: 允许用户指定图像生成的参数，如分辨率、风格和其他相关设置。
+- 图像预览: 根据用户输入显示生成图像的预览。
+- 下载功能: 使用户能够以各种格式下载生成的图像。
 
-## Style Guidelines:
+## 风格指南:
 
-- Primary color: Deep indigo (#3F51B5) for a technological and creative feel.
-- Background color: Light gray (#ECEFF1), providing a clean and neutral backdrop.
-- Accent color: Electric purple (#8E24AA), used for interactive elements to draw the user's eye.
-- Headline font: 'Space Grotesk' (sans-serif) for a modern, tech-oriented aesthetic. Body text: 'Inter' (sans-serif) for readability.
-- Use simple, line-based icons for a clean and modern interface.
-- A clean, responsive layout that adapts to different screen sizes. The image generation parameters and the output should have adequate spacing so that the user can visually scan the interface quickly.
-- Subtle transition animations to indicate loading and processing states.
+- 主色调: 深靛蓝 (#3F51B5)，营造科技感和创造性感觉。
+- 背景色: 浅灰色 (#ECEFF1)，提供干净、中性的背景。
+- 强调色: 电紫色 (#8E24AA)，用于交互元素以吸引用户眼球。
+- 标题字体: 'Space Grotesk' (无衬线字体)，营造现代、科技导向的美学。正文字体: 'Inter' (无衬线字体)，提高可读性。
+- 使用简单的线条图标，打造干净现代的界面。
+- 干净、响应式的布局，适应不同屏幕尺寸。图像生成参数和输出应有足够的间距，以便用户能够快速浏览界面。
+- 微妙的过渡动画，用于指示加载和处理状态。
