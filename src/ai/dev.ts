@@ -6,4 +6,6 @@
 
 // 导入 generate-image-flow 以便在 Genkit 启动时注册它。
 // 这种导入仅用于其副作用（在 Genkit 中注册流程）。
-import './flows/generate-image-flow'
+import './flows/generate-image-flow';
+
+    

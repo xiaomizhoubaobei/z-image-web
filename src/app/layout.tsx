@@ -19,7 +19,7 @@ export const metadata: Metadata = {
  * 整个应用程序的根布局组件。
  * 该组件包裹所有页面并提供一致的结构，
  * 包括全局样式、字体和 UI 提供程序（如 Toaster）。
- * @param {{ children: React.ReactNode }} props - 组件的 props。
+ * @param {Readonly<{ children: React.ReactNode }>} props - 组件的 props。
  * @param {React.ReactNode} props.children - 将在布局中渲染的子组件。
  * @returns {JSX.Element} 应用程序的根 HTML 结构。
  */
@@ -42,3 +42,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+    

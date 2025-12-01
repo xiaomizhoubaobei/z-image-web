@@ -5,12 +5,9 @@ import * as RechartsPrimitive from "recharts"
 
 import { cn } from "@/lib/utils"
 
-// 格式: { THEME_NAME: CSS_SELECTOR }
+// Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 
-/**
- * 图表配置类型定义。
- */
 export type ChartConfig = {
   [k in string]: {
     label?: React.ReactNode
@@ -27,9 +24,6 @@ type ChartContextProps = {
 
 const ChartContext = React.createContext<ChartContextProps | null>(null)
 
-/**
- * 用于访问图表配置的 Hook。
- */
 function useChart() {
   const context = React.useContext(ChartContext)
 
@@ -40,9 +34,6 @@ function useChart() {
   return context
 }
 
-/**
- * 用于包裹图表组件的容器，提供配置和响应式布局。
- */
 const ChartContainer = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
@@ -76,12 +67,6 @@ const ChartContainer = React.forwardRef<
 })
 ChartContainer.displayName = "Chart"
 
-/**
- * 根据图表配置生成 CSS 样式的组件。
- * @param {object} props - 组件的 props。
- * @param {string} props.id - 图表的唯一 ID。
- * @param {ChartConfig} props.config - 图表的配置。
- */
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
     ([, config]) => config.theme || config.color
@@ -115,14 +100,8 @@ ${colorConfig
   )
 }
 
-/**
- * 图表的工具提示组件。
- */
 const ChartTooltip = RechartsPrimitive.Tooltip
 
-/**
- * 图表工具提示的内容组件。
- */
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
@@ -277,14 +256,8 @@ const ChartTooltipContent = React.forwardRef<
 )
 ChartTooltipContent.displayName = "ChartTooltip"
 
-/**
- * 图表的图例组件。
- */
 const ChartLegend = RechartsPrimitive.Legend
 
-/**
- * 图表图例的内容组件。
- */
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> &
@@ -343,13 +316,7 @@ const ChartLegendContent = React.forwardRef<
 )
 ChartLegendContent.displayName = "ChartLegend"
 
-/**
- * 从 payload 中提取项目配置的辅助函数。
- * @param {ChartConfig} config - 图表配置。
- * @param {unknown} payload - Recharts 的 payload 对象。
- * @param {string} key - 用于在配置中查找的键。
- * @returns {object | undefined} 找到的配置项。
- */
+// Helper to extract item config from a payload.
 function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: unknown,

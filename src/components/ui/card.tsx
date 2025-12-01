@@ -2,9 +2,6 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-/**
- * 一个用于包裹内容的卡片组件，具有边框和阴影。
- */
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -20,9 +17,6 @@ const Card = React.forwardRef<
 ))
 Card.displayName = "Card"
 
-/**
- * 卡片的页眉区域，通常包含标题和描述。
- */
 const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -35,9 +29,6 @@ const CardHeader = React.forwardRef<
 ))
 CardHeader.displayName = "CardHeader"
 
-/**
- * 卡片的标题。
- */
 const CardTitle = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -53,9 +44,6 @@ const CardTitle = React.forwardRef<
 ))
 CardTitle.displayName = "CardTitle"
 
-/**
- * 卡片的描述文本。
- */
 const CardDescription = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -68,9 +56,6 @@ const CardDescription = React.forwardRef<
 ))
 CardDescription.displayName = "CardDescription"
 
-/**
- * 卡片的主要内容区域。
- */
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -79,9 +64,6 @@ const CardContent = React.forwardRef<
 ))
 CardContent.displayName = "CardContent"
 
-/**
- * 卡片的页脚区域，通常包含操作按钮。
- */
 const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>

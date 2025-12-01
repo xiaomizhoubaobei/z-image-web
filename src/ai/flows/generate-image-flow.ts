@@ -102,16 +102,17 @@ const generateImageFlow = ai.defineFlow(
       }
     );
 
+    const postResult = await postResponse.json() as any;
+
     if (!postResponse.ok) {
-        const errorBody = await postResponse.text();
-        throw new Error(`启动图像生成任务失败: ${postResponse.statusText} - ${errorBody}`);
+        const errorMessage = postResult?.message || `启动图像生成任务失败: ${postResponse.statusText}`;
+        throw new Error(errorMessage);
     }
 
-    const postResult = await postResponse.json() as any;
-    const taskId = postResult?.task_id;
+    const taskId = postResult?.output?.task_id || postResult?.task_id;
 
     if (!taskId) {
-        throw new Error('从启动响应中获取 task_id 失败。');
+        throw new Error(`从启动响应中获取 task_id 失败: ${JSON.stringify(postResult)}`);
     }
 
     // 2. 轮询结果
@@ -128,15 +129,13 @@ const generateImageFlow = ai.defineFlow(
         }
       );
 
-      if (!getResponse.ok) {
-        const errorBody = await getResponse.text();
-        // 不要立即抛出异常，可能任务只是还没准备好
-        console.warn(`轮询失败: ${getResponse.statusText} - ${errorBody}`);
-        continue; // 继续轮询
-      }
-      
       const data = await getResponse.json() as any;
 
+      if (!getResponse.ok) {
+        const errorMessage = data?.message || `轮询任务状态失败: ${getResponse.statusText}`;
+        throw new Error(errorMessage);
+      }
+      
       if (data.task_status === 'SUCCEED') {
         const imageUrl = data.output?.images?.[0]?.url || data.output_images?.[0];
         if (imageUrl) {
@@ -147,7 +146,7 @@ const generateImageFlow = ai.defineFlow(
             throw new Error('任务成功，但未返回有效的图像 URL。');
         }
       } else if (data.task_status === 'FAILED') {
-        throw new Error('图像生成任务失败。');
+        throw new Error(`图像生成任务失败: ${data.message || '未知错误'}`);
       }
       // 如果 task_status 是 'RUNNING' 或其他状态，循环将继续。
     }

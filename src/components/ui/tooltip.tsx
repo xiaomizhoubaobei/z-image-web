@@ -5,24 +5,12 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
 import { cn } from "@/lib/utils"
 
-/**
- * 包装器，提供工具提示的上下文。
- */
 const TooltipProvider = TooltipPrimitive.Provider
 
-/**
- * 一个当用户将光标悬停在触发元素上时显示信息的弹出框。
- */
 const Tooltip = TooltipPrimitive.Root
 
-/**
- * 用于打开/关闭工具提示的触发器。
- */
 const TooltipTrigger = TooltipPrimitive.Trigger
 
-/**
- * 工具提示的内容。
- */
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>

@@ -7,29 +7,14 @@ import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-/**
- * 从屏幕的一侧滑出的工作表。
- */
 const Sheet = SheetPrimitive.Root
 
-/**
- * 用于打开工作表的触发器。
- */
 const SheetTrigger = SheetPrimitive.Trigger
 
-/**
- * 用于关闭工作表的按钮。
- */
 const SheetClose = SheetPrimitive.Close
 
-/**
- * 将子组件渲染到不同 DOM 树中的传送门。
- */
 const SheetPortal = SheetPrimitive.Portal
 
-/**
- * 一个半透明的覆盖层，显示在工作表后面。
- */
 const SheetOverlay = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
@@ -45,9 +30,6 @@ const SheetOverlay = React.forwardRef<
 ))
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-/**
- * 定义工作表内容的样式变体。
- */
 const sheetVariants = cva(
   "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   {
@@ -67,16 +49,10 @@ const sheetVariants = cva(
   }
 )
 
-/**
- * 工作表内容组件的 Props 定义。
- */
 interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {}
 
-/**
- * 工作表的主要内容区域。
- */
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
@@ -98,10 +74,6 @@ const SheetContent = React.forwardRef<
 ))
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
-/**
- * 工作表的页眉区域。
- * @param {React.HTMLAttributes<HTMLDivElement>} props - 组件的 props。
- */
 const SheetHeader = ({
   className,
   ...props
@@ -116,10 +88,6 @@ const SheetHeader = ({
 )
 SheetHeader.displayName = "SheetHeader"
 
-/**
- * 工作表的页脚区域。
- * @param {React.HTMLAttributes<HTMLDivElement>} props - 组件的 props。
- */
 const SheetFooter = ({
   className,
   ...props
@@ -134,9 +102,6 @@ const SheetFooter = ({
 )
 SheetFooter.displayName = "SheetFooter"
 
-/**
- * 工作表的标题。
- */
 const SheetTitle = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
@@ -149,9 +114,6 @@ const SheetTitle = React.forwardRef<
 ))
 SheetTitle.displayName = SheetPrimitive.Title.displayName
 
-/**
- * 工作表的描述文本。
- */
 const SheetDescription = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>

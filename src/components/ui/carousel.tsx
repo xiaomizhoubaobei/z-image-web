@@ -14,9 +14,6 @@ type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
 type CarouselOptions = UseCarouselParameters[0]
 type CarouselPlugin = UseCarouselParameters[1]
 
-/**
- * 轮播组件的 Props 定义。
- */
 type CarouselProps = {
   opts?: CarouselOptions
   plugins?: CarouselPlugin
@@ -35,9 +32,6 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
 
-/**
- * 用于访问轮播组件上下文的 Hook。
- */
 function useCarousel() {
   const context = React.useContext(CarouselContext)
 
@@ -48,9 +42,6 @@ function useCarousel() {
   return context
 }
 
-/**
- * 用于显示一组可水平或垂直滚动的项目。
- */
 const Carousel = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & CarouselProps
@@ -159,9 +150,6 @@ const Carousel = React.forwardRef<
 )
 Carousel.displayName = "Carousel"
 
-/**
- * 轮播组件的内容容器。
- */
 const CarouselContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -184,9 +172,6 @@ const CarouselContent = React.forwardRef<
 })
 CarouselContent.displayName = "CarouselContent"
 
-/**
- * 轮播组件中的单个项目。
- */
 const CarouselItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -209,9 +194,6 @@ const CarouselItem = React.forwardRef<
 })
 CarouselItem.displayName = "CarouselItem"
 
-/**
- * 用于滚动到上一个项目的按钮。
- */
 const CarouselPrevious = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
@@ -241,9 +223,6 @@ const CarouselPrevious = React.forwardRef<
 })
 CarouselPrevious.displayName = "CarouselPrevious"
 
-/**
- * 用于滚动到下一个项目的按钮。
- */
 const CarouselNext = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>

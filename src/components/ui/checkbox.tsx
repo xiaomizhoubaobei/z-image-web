@@ -6,9 +6,6 @@ import { Check } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-/**
- * 一个允许用户在选中和未选中状态之间切换的复选框。
- */
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>

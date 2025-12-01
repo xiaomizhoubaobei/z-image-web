@@ -7,15 +7,8 @@ import { DayPicker } from "react-day-picker"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
-/**
- * 日历组件的 Props 定义。
- */
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
-/**
- * 一个允许用户从日历中选择一个或多个日期的组件。
- * @param {CalendarProps} props - 组件的 props。
- */
 function Calendar({
   className,
   classNames,

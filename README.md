@@ -16,7 +16,7 @@
 - [React](https://reactjs.org/) – UI 库
 - [TypeScript](https://www.typescriptlang.org/) – 类型化 JavaScript
 - [Genkit](https://firebase.google.com/docs/genkit) – AI 集成框架
-- [Google Gemini](https://deepmind.google/technologies/gemini/) - AI 模型
+- [ModelScope](https://modelscope.cn/) - AI 模型服务
 - [ShadCN UI](https://ui.shadcn.com/) – UI 组件库
 - [Tailwind CSS](https://tailwindcss.com/) – CSS 框架
 
@@ -39,15 +39,17 @@ npm install
 
 ### 3. 设置环境变量
 
-您需要一个 Google AI API 密钥才能使用 Gemini 模型。
+您需要一个 ModelScope API 密钥才能使用图像生成模型。
 
-1. 访问 [Google AI Studio](https://aistudio.google.com/app/apikey) 获取您的 API 密钥。
-2. 在项目根目录下创建一个名为 `.env.local` 的文件。
-3. 将您的 API 密钥添加到文件中：
+1.  访问 [ModelScope 控制台](https://modelscope.cn/my/myaccesstoken) 获取您的 API 密钥。
+2.  在项目根目录下创建一个名为 `.env.local` 的文件。
+3.  将您的 API 密钥添加到文件中：
 
-   ```env
-   GEMINI_API_KEY="在这里粘贴您的API密钥"
-   ```
+    ```env
+    MODELSCOPE_API_KEY="在这里粘贴您的API密钥"
+    ```
+
+    > **注意**: 如果您还想使用其他依赖 Google API 的 Genkit 功能，您也需要设置 `GEMINI_API_KEY`。
 
 ### 4. 运行开发服务器
 
@@ -61,10 +63,10 @@ npm run dev
 
 ## 🎨 使用方法
 
-1. 在“提示词”文本框中输入您想要生成的图片描述。
-2. 根据需要选择“风格”和“分辨率”。
-3. （可选）填写“反向提示词”来排除不希望出现的元素。
-4. 调整“步数”和“引导系数”滑块以控制生成质量和与提示词的符合度。
-5. 点击“生成图片”按钮。
-6. 等待进度条完成，您生成的图片将显示在右侧的输出框中。
-7. 点击“下载图片”按钮保存您的作品。
+1.  在“提示词”文本框中输入您想要生成的图片描述。
+2.  根据需要选择“风格”。
+3.  （可选）填写“反向提示词”来排除不希望出现的元素。
+4.  调整“步数”和“引导系数”滑块以控制生成质量和与提示词的符合度。
+5.  点击“生成图片”按钮。
+6.  等待进度条完成，您生成的图片将显示在右侧的输出框中。
+7.  点击“下载图片”按钮保存您的作品。

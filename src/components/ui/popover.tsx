@@ -5,19 +5,10 @@ import * as PopoverPrimitive from "@radix-ui/react-popover"
 
 import { cn } from "@/lib/utils"
 
-/**
- * 一个在触发元素附近显示丰富内容的弹出框。
- */
 const Popover = PopoverPrimitive.Root
 
-/**
- * 用于打开/关闭弹出框的触发器。
- */
 const PopoverTrigger = PopoverPrimitive.Trigger
 
-/**
- * 弹出框的内容。
- */
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>

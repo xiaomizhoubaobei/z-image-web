@@ -6,39 +6,18 @@ import { Check, ChevronRight, Circle } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-/**
- * 当用户与触发器（如按钮）交互时显示一个菜单。
- */
 const DropdownMenu = DropdownMenuPrimitive.Root
 
-/**
- * 用于打开下拉菜单的按钮。
- */
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
 
-/**
- * 用于在下拉菜单中对项目进行分组。
- */
 const DropdownMenuGroup = DropdownMenuPrimitive.Group
 
-/**
- * 一个将子组件渲染到不同 DOM 树中的传送门。
- */
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal
 
-/**
- * 包含另一个下拉菜单的子菜单。
- */
 const DropdownMenuSub = DropdownMenuPrimitive.Sub
 
-/**
- * 用于在下拉菜单中对单选项目进行分组。
- */
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
 
-/**
- * 用于打开子菜单的触发器。
- */
 const DropdownMenuSubTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
@@ -61,9 +40,6 @@ const DropdownMenuSubTrigger = React.forwardRef<
 DropdownMenuSubTrigger.displayName =
   DropdownMenuPrimitive.SubTrigger.displayName
 
-/**
- * 子菜单的内容。
- */
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
@@ -80,9 +56,6 @@ const DropdownMenuSubContent = React.forwardRef<
 DropdownMenuSubContent.displayName =
   DropdownMenuPrimitive.SubContent.displayName
 
-/**
- * 下拉菜单的内容。
- */
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
@@ -101,9 +74,6 @@ const DropdownMenuContent = React.forwardRef<
 ))
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName
 
-/**
- * 下拉菜单中的一个项目。
- */
 const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
@@ -122,9 +92,6 @@ const DropdownMenuItem = React.forwardRef<
 ))
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName
 
-/**
- * 一个可以被选中或取消选中的下拉菜单项。
- */
 const DropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
@@ -149,9 +116,6 @@ const DropdownMenuCheckboxItem = React.forwardRef<
 DropdownMenuCheckboxItem.displayName =
   DropdownMenuPrimitive.CheckboxItem.displayName
 
-/**
- * 在一组只能选择一个的选项中使用的下拉菜单项。
- */
 const DropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
@@ -174,9 +138,6 @@ const DropdownMenuRadioItem = React.forwardRef<
 ))
 DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName
 
-/**
- * 用于在下拉菜单中渲染一个标签。
- */
 const DropdownMenuLabel = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
@@ -195,9 +156,6 @@ const DropdownMenuLabel = React.forwardRef<
 ))
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName
 
-/**
- * 用于在下拉菜单项之间渲染一条分割线。
- */
 const DropdownMenuSeparator = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
@@ -210,10 +168,6 @@ const DropdownMenuSeparator = React.forwardRef<
 ))
 DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName
 
-/**
- * 用于在下拉菜单项中显示一个键盘快捷键。
- * @param {React.HTMLAttributes<HTMLSpanElement>} props - 组件的 props。
- */
 const DropdownMenuShortcut = ({
   className,
   ...props

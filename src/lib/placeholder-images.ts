@@ -16,3 +16,5 @@ export type ImagePlaceholder = {
  * @type {ImagePlaceholder[]}
  */
 export const PlaceHolderImages: ImagePlaceholder[] = data.placeholderImages;
+
+    

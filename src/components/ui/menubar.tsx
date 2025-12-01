@@ -6,59 +6,36 @@ import { Check, ChevronRight, Circle } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-/**
- * 菜单栏中包含一组命令的菜单。
- * @param {React.ComponentProps<typeof MenubarPrimitive.Menu>} props - 组件的 props。
- */
 function MenubarMenu({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Menu>) {
   return <MenubarPrimitive.Menu {...props} />
 }
 
-/**
- * 用于在菜单中对项目进行分组。
- * @param {React.ComponentProps<typeof MenubarPrimitive.Group>} props - 组件的 props。
- */
 function MenubarGroup({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Group>) {
   return <MenubarPrimitive.Group {...props} />
 }
 
-/**
- * 将子组件渲染到不同 DOM 树中的传送门。
- * @param {React.ComponentProps<typeof MenubarPrimitive.Portal>} props - 组件的 props。
- */
 function MenubarPortal({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Portal>) {
   return <MenubarPrimitive.Portal {...props} />
 }
 
-/**
- * 用于在菜单中对单选项目进行分组。
- * @param {React.ComponentProps<typeof MenubarPrimitive.RadioGroup>} props - 组件的 props。
- */
 function MenubarRadioGroup({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.RadioGroup>) {
   return <MenubarPrimitive.RadioGroup {...props} />
 }
 
-/**
- * 包含另一个菜单的子菜单。
- * @param {React.ComponentProps<typeof MenubarPrimitive.Sub>} props - 组件的 props。
- */
 function MenubarSub({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Sub>) {
   return <MenubarPrimitive.Sub data-slot="menubar-sub" {...props} />
 }
 
-/**
- * 一个水平菜单栏，通常位于应用程序窗口或框架的顶部。
- */
 const Menubar = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>
@@ -74,9 +51,6 @@ const Menubar = React.forwardRef<
 ))
 Menubar.displayName = MenubarPrimitive.Root.displayName
 
-/**
- * 用于打开菜单的触发器。
- */
 const MenubarTrigger = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Trigger>
@@ -92,9 +66,6 @@ const MenubarTrigger = React.forwardRef<
 ))
 MenubarTrigger.displayName = MenubarPrimitive.Trigger.displayName
 
-/**
- * 用于打开子菜单的触发器。
- */
 const MenubarSubTrigger = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger> & {
@@ -116,9 +87,6 @@ const MenubarSubTrigger = React.forwardRef<
 ))
 MenubarSubTrigger.displayName = MenubarPrimitive.SubTrigger.displayName
 
-/**
- * 子菜单的内容。
- */
 const MenubarSubContent = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.SubContent>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent>
@@ -134,9 +102,6 @@ const MenubarSubContent = React.forwardRef<
 ))
 MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName
 
-/**
- * 菜单的内容。
- */
 const MenubarContent = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content>
@@ -162,9 +127,6 @@ const MenubarContent = React.forwardRef<
 )
 MenubarContent.displayName = MenubarPrimitive.Content.displayName
 
-/**
- * 菜单中的一个项目。
- */
 const MenubarItem = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item> & {
@@ -183,9 +145,6 @@ const MenubarItem = React.forwardRef<
 ))
 MenubarItem.displayName = MenubarPrimitive.Item.displayName
 
-/**
- * 一个可以被选中或取消选中的菜单项。
- */
 const MenubarCheckboxItem = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.CheckboxItem>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.CheckboxItem>
@@ -209,9 +168,6 @@ const MenubarCheckboxItem = React.forwardRef<
 ))
 MenubarCheckboxItem.displayName = MenubarPrimitive.CheckboxItem.displayName
 
-/**
- * 在一组只能选择一个的选项中使用的菜单项。
- */
 const MenubarRadioItem = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.RadioItem>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem>
@@ -234,9 +190,6 @@ const MenubarRadioItem = React.forwardRef<
 ))
 MenubarRadioItem.displayName = MenubarPrimitive.RadioItem.displayName
 
-/**
- * 用于在菜单中渲染一个标签。
- */
 const MenubarLabel = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Label> & {
@@ -255,9 +208,6 @@ const MenubarLabel = React.forwardRef<
 ))
 MenubarLabel.displayName = MenubarPrimitive.Label.displayName
 
-/**
- * 用于在菜单项之间渲染一条分割线。
- */
 const MenubarSeparator = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator>
@@ -270,10 +220,6 @@ const MenubarSeparator = React.forwardRef<
 ))
 MenubarSeparator.displayName = MenubarPrimitive.Separator.displayName
 
-/**
- * 用于在菜单项中显示一个键盘快捷键。
- * @param {React.HTMLAttributes<HTMLSpanElement>} props - 组件的 props。
- */
 const MenubarShortcut = ({
   className,
   ...props
