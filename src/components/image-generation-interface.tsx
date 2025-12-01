@@ -36,13 +36,7 @@ import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
-import { generateImage, type GenerateImageInput } from "@/ai/flows/generate-image-flow";
 
-
-/**
- * 图像生成表单的 Zod schema。
- * 定义表单数据的结构和验证规则。
- */
 const formSchema = z.object({
     prompt: z.string().min(10, {
         message: "提示词必须至少包含10个字符。",
@@ -53,11 +47,6 @@ const formSchema = z.object({
     guidance_scale: z.array(z.number()).default([7.5]),
 });
 
-/**
- * 用于生成图像的主界面。
- * 该组件包括用户输入的表单和显示生成图像的区域。
- * @returns {JSX.Element} 渲染后的图像生成界面。
- */
 const ImageGenerationInterface: FC = () => {
     const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -75,22 +64,18 @@ const ImageGenerationInterface: FC = () => {
         },
     });
 
-    /**
-     * 一个在图像生成期间模拟进度条的 effect。
-     * 当 `isLoading` 为 true 时启动，为 false 时停止。
-     */
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
         if (isLoading) {
             interval = setInterval(() => {
                 setProgress((prev) => {
-                    if (prev >= 90) {
+                    if (prev >= 95) {
                         if (interval) clearInterval(interval);
-                        return 90;
+                        return 95;
                     }
                     return prev + 5;
                 });
-            }, 500);
+            }, 1000); // 调整为更平滑的进度
         } else {
             setProgress(0);
         }
@@ -100,18 +85,25 @@ const ImageGenerationInterface: FC = () => {
         };
     }, [isLoading]);
 
-
-    /**
-     * 处理图像生成的表单提交。
-     * @param {z.infer<typeof formSchema>} values - 验证后的表单值。
-     */
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setIsLoading(true);
         setImageUrl(null);
         setProgress(5);
 
         try {
-            const result = await generateImage(values as GenerateImageInput);
+            const response = await fetch('/api/generate-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || `HTTP 错误! 状态: ${response.status}`);
+            }
 
             if (result.imageUrl) {
                 setImageUrl(result.imageUrl);
@@ -137,10 +129,6 @@ const ImageGenerationInterface: FC = () => {
         }
     };
 
-    /**
-     * 处理生成图像的下载。
-     * 创建一个临时链接并触发点击以下载图像。
-     */
     const handleDownload = () => {
         if (!imageUrl) return;
         const link = document.createElement("a");
