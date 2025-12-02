@@ -23,6 +23,12 @@ export default function Home(): JSX.Element {
                 <a href="https://660086.fwh.is/id.php?id=20250001" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
                     个ICP备20250001号
                 </a>
+                <a href="https://icp.gov.moe/?keyword=20250963" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+                    萌ICP备20250963号
+                </a>
+                <a href="https://icp.hentioe.dev/sites/20251075" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+                    喵ICP备20251075号
+                </a>
                 <a href="https://icp.xnet.ren/id.php?keyword=20250009" target="_blank" rel="noopener noreferrer">
                     <img src="https://shields.wudu.ltd/gen.php?part1=信网联盟&style=coral&part2=20250009" alt="信网联盟" />
                 </a>
